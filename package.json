@@ -1,6 +1,6 @@
 {
-  "name": "desktopapp",
-  "productName": "desktopapp",
+  "name": "myapp",
+  "productName": "myapp",
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": "src/index.js",
@@ -12,7 +12,7 @@
     "lint": "echo \"No linting configured\""
   },
   "keywords": [],
-  "author": "lzamora",
+  "author": "luis",
   "license": "MIT",
   "config": {
     "forge": {
@@ -21,7 +21,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "desktopapp"
+            "name": "myapp"
           }
         },
         {
@@ -43,8 +43,7 @@
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
-    "mqtt": "^4.2.8",
-    "python-shell": "^1.0.7"
+    "mqtt": "^4.2.8"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.59",
@@ -52,7 +51,6 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.59",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.59",
     "@electron-forge/maker-zip": "^6.0.0-beta.59",
-    "electron": "13.2.1",
-    "electron-packager": "^15.3.0"
+    "electron": "13.2.2"
   }
 }
