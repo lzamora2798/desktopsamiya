@@ -5,3 +5,8 @@ body {
   padding: 2rem;
   text-align: center;
 }
+
+#online{
+  text-align: left;
+  color: red;
+}

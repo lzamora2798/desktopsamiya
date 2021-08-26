@@ -1,6 +1,6 @@
 import random
 import time
-
+import json
 from paho.mqtt import client as mqtt_client
 
 
@@ -28,11 +28,12 @@ def connect_mqtt():
 def publish(client):
 
     while True:
-        time.sleep(1)
+        time.sleep(5)
         msg_count = round(random.uniform(30, 35),2)
 
         msg = f"{msg_count} kg"
-        result = client.publish(topic, msg)
+        jsondata = json.dumps({"peso":msg_count})
+        result = client.publish(topic, jsondata)
         status = result[0]
         if status == 0:
             print(f"Send `{msg}` to topic `{topic}`")
