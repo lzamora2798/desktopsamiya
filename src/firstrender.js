@@ -9,7 +9,9 @@ function changeScreen() {
 
 client.on('message',(topic,message)=>{ 
     message = JSON.parse(message.toString());
+    console.log(message)
     if(message.flag){
+        client.end()
         changeScreen()
     }
 })

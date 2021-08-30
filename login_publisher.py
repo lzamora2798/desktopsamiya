@@ -19,24 +19,26 @@ def connect_mqtt():
             print("Failed to connect, return code %d\n", rc)
 
     client = mqtt_client.Client(client_id)
-    #client.username_pw_set(username, password)
     client.on_connect = on_connect
     client.connect(broker, port)
     return client
 
 
 def publish(client):
-
+    contador = 0;
     while True:
-        time.sleep(2)
-        msg_count = round(random.uniform(30, 35),2)
-
-        msg = f"{msg_count} kg"
-        jsondata = json.dumps({"peso":msg_count})
+        time.sleep(1)
+        if contador <30:
+            msg = {"flag":False}
+        else:
+            msg = {"flag":True}
+            contador =0
+        jsondata = json.dumps(msg)
         result = client.publish(topic, jsondata)
         status = result[0]
         if status == 0:
-            print(f"Send `{msg}` to topic `{topic}`")
+            print(f"Send",msg,"to topic `{topic}`")
+            contador+=1
         else:
             print(f"Failed to send message to topic {topic}")
 
