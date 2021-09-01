@@ -6,13 +6,13 @@ from paho.mqtt import client as mqtt_client
 
 
 
-broker = '192.168.100.27'
+broker = 'broker.senscloud.io'
 port = 1883
-topic = "python/mqtt"
+topic = "/api/devices/HMI_SENS_SAMIYA"
 # generate client ID with pub prefix randomly
 client_id = f'python-mqtt-{random.randint(0, 100)}'
-# username = 'emqx'
-# password = 'public'
+username = 'HMI_SENS_SAMIYA'
+password = 'b4cGPbq3muEZSbvBPWOXUrgKwMU4c1'
 
 
 def connect_mqtt() -> mqtt_client:
@@ -23,7 +23,7 @@ def connect_mqtt() -> mqtt_client:
             print("Failed to connect, return code %d\n", rc)
 
     client = mqtt_client.Client(client_id)
-    #client.username_pw_set(username, password)
+    client.username_pw_set(username, password)
     client.on_connect = on_connect
     client.connect(broker, port)
     return client
