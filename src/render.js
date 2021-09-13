@@ -20,8 +20,8 @@ function onlogout(){
 
 function showmodal(message){
   modal.classList.add("is-active");
-  pesoEN.textContent = message.peso + " kg"
-  rfidEN.textContent = message.rfid
+  pesoEN.textContent = message['SCALE']['weight'] + " " + message['SCALE']['units']
+  rfidEN.textContent = message['RFID']['ID']
   setTimeout(function() {
     modal.classList.remove("is-active"); // se desactiva el modal despues de 3 seg
   }, 3000);
@@ -32,10 +32,13 @@ function stringPayload(message)
 { 
   var peso = { 
     peso:{ 
-      value:message.peso
+      value:message['SCALE']['weight']
     },
-    rfid:{ 
-      value:message.rfid
+    units:{ 
+      value:message['SCALE']['units']
+    },
+    id:{ 
+      value:message['RFID']['ID']
     }
   }
   return JSON.stringify(peso);
@@ -43,8 +46,8 @@ function stringPayload(message)
 client.on('message',(topic,message)=>{ // cuando llega el mensaje del mqtt local
   message = JSON.parse(message.toString());
   console.log(message)
-  elem.textContent = message.peso + " kg"; //change data in html
-  if (message.flag){ 
+  elem.textContent = message['SCALE']['weight'] + " " + message['SCALE']['units']; //change data in html
+  if (message['RFID']['ID']){ // garantiza que si exista el id 
     var payload = stringPayload(message);
     client2.publish(topic2, payload)
     showmodal(message);

@@ -32,12 +32,13 @@ def publish(client):
         msg_count = round(random.uniform(30, 35),2)
 
         msg = f"{msg_count} kg"
-        if c%10==0 :
-            jsondata = json.dumps({"peso":msg_count,"rfid":"2dbdbff423","flag":"true","id":False})
-        elif c%3==0 :
-            jsondata = json.dumps({"peso":msg_count,"id":True})
+        if c%13==0 :
+            jsondata = {'RFID': {'ID': 'UIDD0A9455F', 'ROLE': ''}, 'SCALE': {'successful': True, 'stable': True, 'tare': 'GROSS', 'weight': '1.036', 'units': 'kg'}}
+        elif c%7==0 : 
+            jsondata = {'RFID': {'ID': 'UID525ED1B2', 'ROLE': 'SMY@DM1N.01'}, 'SCALE': {'successful': True, 'stable': True, 'tare': 'GROSS', 'weight': '1.036', 'units': 'kg'}}
         else:
-            jsondata = json.dumps({"peso":msg_count,"id":False})
+            jsondata = {'RFID': 'No Card', 'SCALE': {'successful': True, 'stable': True, 'tare': 'GROSS', 'weight': '1.036', 'units': 'kg'}}
+        jsondata = json.dumps(jsondata)
         print(jsondata)   
         result = client.publish(topic, jsondata)
         status = result[0]

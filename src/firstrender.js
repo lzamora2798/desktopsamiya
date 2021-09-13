@@ -15,10 +15,12 @@ function onlogin(){
 
 client.on('message',(topic,message)=>{ 
     message = JSON.parse(message.toString());
-    console.log(message)
-    if(message.id){
+    role = message['RFID']['ROLE']
+    console.log(role)
+    if(role=="SMY@DM1N.01"){ // solo hay role en admin
         client.end()
-        changeScreen()
+       changeScreen()
+        
     }
 })
   
