@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="assets/index.css">
   </head>
   <body>
+    <button class="button is-link is-light" id="logout" onclick="onlogout()">Cerrar sesion</button>
     <p id="online"></p>
     <h1 class="title">Bienvenido</h1>
     <p>El peso es:</p>
@@ -17,6 +18,28 @@
     <div class="section">
       <button id="startBtn" class="button is-primary">Enviar peso</button>
     </div>  
+    
+    <div class="modal" id="infoModal">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Envio exitoso</p>
+          <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+          <div>
+            <strong>Peso Enviado </strong><strong id="pesoEN"></strong>
+          </div>
+          <div>
+            <strong>RFID Enviado </strong><strong id="rfidEN"></strong>
+          </div>
+          
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button is-success">OK</button>
+        </footer>
+      </div>
+    </div>
     <script src="render.js"></script>
   </body>
 </html>

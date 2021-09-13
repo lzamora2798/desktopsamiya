@@ -25,7 +25,7 @@ def connect_mqtt():
 
 
 def publish(client):
-    contador = 0;
+    contador = 0
     while True:
         time.sleep(1)
         if contador <30:

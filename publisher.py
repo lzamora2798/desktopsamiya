@@ -26,17 +26,24 @@ def connect_mqtt():
 
 
 def publish(client):
-
+    c = 1
     while True:
         time.sleep(2)
         msg_count = round(random.uniform(30, 35),2)
 
         msg = f"{msg_count} kg"
-        jsondata = json.dumps({"peso":msg_count})
+        if c%10==0 :
+            jsondata = json.dumps({"peso":msg_count,"rfid":"2dbdbff423","flag":"true","id":False})
+        elif c%3==0 :
+            jsondata = json.dumps({"peso":msg_count,"id":True})
+        else:
+            jsondata = json.dumps({"peso":msg_count,"id":False})
+        print(jsondata)   
         result = client.publish(topic, jsondata)
         status = result[0]
         if status == 0:
             print(f"Send `{msg}` to topic `{topic}`")
+            c+=1
         else:
             print(f"Failed to send message to topic {topic}")
 
