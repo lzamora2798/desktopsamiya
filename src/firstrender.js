@@ -19,7 +19,7 @@ client.on('message',(topic,message)=>{
     console.log(role)
     if(role=="SMY@DM1N.01"){ // solo hay role en admin
         client.end()
-       changeScreen()
+       
         
     }
 })
@@ -29,3 +29,7 @@ client.on('message',(topic,message)=>{
     console.log("conectado")
   })
   
+  client.on('end',()=>{ //se llama 
+    console.log("desconectado")
+    changeScreen()
+  })

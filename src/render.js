@@ -10,11 +10,25 @@ var client2  = mqtt.connect({servers : [{ host: host, port: port}], username : u
 var topic = "python/weight"
 var elem = document.getElementById('peso');
 var modal = document.getElementById('infoModal');
+var logoutmodal = document.getElementById('logoutModal');
 var pesoEN = document.getElementById('pesoEN');
 var rfidEN = document.getElementById('rfidEN');
+var adminrole = "SMY@DM1N.01";
 
+var bandera_logout = false;
 function onlogout(){
+  bandera_logout = true;
+  logoutmodal.classList.add("is-active");
+}
+
+function cancellogout(){
+  bandera_logout = false;
+  logoutmodal.classList.remove("is-active");
+}
+
+function gobacktoLogin(){
   console.log("cambio de pantalla")
+  logoutmodal.classList.remove("is-active");
   window.location.href = "main.html"
 }
 
@@ -47,11 +61,21 @@ client.on('message',(topic,message)=>{ // cuando llega el mensaje del mqtt local
   message = JSON.parse(message.toString());
   console.log(message)
   elem.textContent = message['SCALE']['weight'] + " " + message['SCALE']['units']; //change data in html
-  if (message['RFID']['ID']){ // garantiza que si exista el id 
-    var payload = stringPayload(message);
-    client2.publish(topic2, payload)
-    showmodal(message);
+  var role = message['RFID']['ROLE'];
+  if(bandera_logout){ // si el modal logut esta activado 
+    if (role == adminrole){ // 
+      gobacktoLogin();
+    }
   }
+  else{   
+    if (message['RFID']['ID'] && role != adminrole){ // garantiza que si exista el id 
+      var payload = stringPayload(message);
+      client2.publish(topic2, payload)
+      showmodal(message);
+    }
+  }
+
+  
 })
 
 client.on('connect',()=>{
