@@ -33,11 +33,11 @@ def publish(client):
 
         msg = f"{msg_count} kg"
         if c%13==0 :
-            jsondata = {'RFID': {'ID': 'UIDD0A9455F', 'ROLE': ''}, 'SCALE': {'successful': True, 'stable': True, 'tare': 'GROSS', 'weight': '1.036', 'units': 'kg'}}
+            jsondata = {'RFID': {'ID': 'UIDD0A9455F', 'ROLE': ''}, 'SEND': True,'SCALE': {'successful': True, 'stable': True, 'tare': 'GROSS', 'weight': '1.036', 'units': 'kg'}}
         elif c%7==0 : 
-            jsondata = {'RFID': {'ID': 'UID525ED1B2', 'ROLE': 'SMY@DM1N.01'}, 'SCALE': {'successful': True, 'stable': True, 'tare': 'GROSS', 'weight': '1.036', 'units': 'kg'}}
+            jsondata = {'RFID': {'ID': 'UID525ED1B2', 'ROLE': 'SMY@DM1N.01'}, 'SEND': True,'SCALE': {'successful': True, 'stable': True, 'tare': 'GROSS', 'weight': '1.036', 'units': 'kg'}}
         else:
-            jsondata = {'RFID': 'No Card', 'SCALE': {'successful': True, 'stable': True, 'tare': 'GROSS', 'weight': '1.036', 'units': 'kg'}}
+            jsondata = {'RFID': 'No Card','SEND': False, 'SCALE': {'successful': True, 'stable': True, 'tare': 'GROSS', 'weight': '1.036', 'units': 'kg'}}
         jsondata = json.dumps(jsondata)
         print(jsondata)   
         result = client.publish(topic, jsondata)

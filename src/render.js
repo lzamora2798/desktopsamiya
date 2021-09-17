@@ -3,10 +3,11 @@ const saveData = require('./filewriter.js');
 var client  = mqtt.connect([{ host: 'localhost', port: 1883 }])
 var host = 'broker.senscloud.io'
 var port = 1883
-var username = "HMI_samiya_test"
+var username = "rfid_samiya_test"
 var pass  = "b4cGPbq3muEZSbvBPWOXUrgKwMU4c1"
-var topic2 = '/api/devices/'+username
-var client2  = mqtt.connect({servers : [{ host: host, port: port}], username : username, password :pass})
+var topic2 = '/api/rfid/'+username
+const clientid = 'rfid_' + Math.random().toString(16).substr(2, 8)
+var client2  = mqtt.connect({servers : [{ host: host, port: port}], username : username, password :pass ,clientId:clientid})
 var topic = "python/weight"
 var elem = document.getElementById('peso');
 var modal = document.getElementById('infoModal');
@@ -45,30 +46,26 @@ function showmodal(message){
 function stringPayload(message)
 { 
   var peso = { 
-    peso:{ 
-      value:message['SCALE']['weight']
-    },
-    units:{ 
-      value:message['SCALE']['units']
-    },
-    id:{ 
-      value:message['RFID']['ID']
-    }
+    weight:parseFloat(message['SCALE']['weight']),
+    units:message['SCALE']['units'],
+    id:message['RFID']['ID']
   }
   return JSON.stringify(peso);
 }
 client.on('message',(topic,message)=>{ // cuando llega el mensaje del mqtt local
   message = JSON.parse(message.toString());
-  console.log(message)
+  //console.log(message)
   elem.textContent = message['SCALE']['weight'] + " " + message['SCALE']['units']; //change data in html
   var role = message['RFID']['ROLE'];
+  var bandera = message['SEND']
+  console.log(bandera)
   if(bandera_logout){ // si el modal logut esta activado 
     if (role == adminrole){ // 
       gobacktoLogin();
     }
   }
   else{   
-    if (message['RFID']['ID'] && role != adminrole){ // garantiza que si exista el id 
+    if (bandera && message['RFID']['ID'] && role != adminrole){ // garantiza que si exista el id 
       var payload = stringPayload(message);
       client2.publish(topic2, payload)
       showmodal(message);
@@ -84,7 +81,7 @@ client.on('connect',()=>{
 })
 
 client2.on('connect',()=>{
-  console.log("conectado2")
+  console.log("conectado2",client2)
 })
 
 
