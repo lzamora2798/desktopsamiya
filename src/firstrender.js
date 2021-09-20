@@ -1,4 +1,8 @@
 var mqtt = require('mqtt')
+const { exec } = require("child_process");
+const https = require('https')
+const makePost = require('./postmaker.js');
+
 var client  = mqtt.connect([{ host: 'localhost', port: 1883 }])
 var topic = "python/weight"
 var loginform = document.getElementById("loginform") ;
@@ -6,6 +10,29 @@ var admin_flag= false;
 function changeScreen() {
     console.log("cambio de pantalla")
     window.location.href = "index.html"
+}
+
+function TurnBuzzer(value){
+  exec(`echo ${value} > /dev/buzzer`, (error, stdout, stderr) => {
+    if (error) {
+        console.log(`error: ${error.message}`);
+        return;
+    }
+    if (stderr) {
+        console.log(`stderr: ${stderr}`);
+        return;
+    }
+    console.log(`stdout: ${stdout}`);
+});
+  
+}
+
+function activeNoise(){
+  TurnBuzzer(1)
+  setTimeout(function() {
+    TurnBuzzer(0)
+  }, 1000);
+
 }
 
 function onlogin(){
@@ -30,9 +57,11 @@ client.on('message',(topic,message)=>{
     admin_flag = false;
     client.subscribe(topic)
     console.log("conectado")
+    makePost();
   })
   
   client.on('end',()=>{ //se llama 
+    activeNoise();
     console.log("desconectado")
     changeScreen()
   })
