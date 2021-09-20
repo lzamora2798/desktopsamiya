@@ -27,14 +27,20 @@ body {
 }
 
 .contentlogin{
-  width: 80%;
+  width: 20%;
+  padding-top: 10px;
+  padding-left: 10px;
+  margin-left: 40%;
+  margin-right: 40%;
   position: inherit;
-  padding-top: 5%;
-  padding-bottom: 5%;
-  padding-left: 30%;
-  padding-right: 10%;
+  background-color:#10174c;
   text-align: center;
   visibility: hidden;
+  border-radius: 10px;
+  
+}
+.contentlogin .buttons{
+  margin-bottom: 0px;
 }
 
 
