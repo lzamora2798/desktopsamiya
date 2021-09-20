@@ -29,7 +29,10 @@ function cancellogout(){
 
 function gobacktoLogin(){
   console.log("cambio de pantalla")
+  bandera_logout = false;
   logoutmodal.classList.remove("is-active");
+  client.end()
+  client2.end()
   window.location.href = "main.html"
 }
 

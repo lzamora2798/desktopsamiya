@@ -28,7 +28,7 @@ def connect_mqtt():
 def publish(client):
     c = 1
     while True:
-        time.sleep(2)
+        time.sleep(1)
         msg_count = round(random.uniform(30, 35),2)
 
         msg = f"{msg_count} kg"
