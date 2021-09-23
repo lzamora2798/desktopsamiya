@@ -13,6 +13,9 @@ var topic = "python/weight"
 var elem = document.getElementById('peso');
 var modal = document.getElementById('infoModal');
 var logoutmodal = document.getElementById('logoutModal');
+var logoutform = document.getElementById('logoutform');
+var pinInput = document.getElementById("pinInput") ;
+var errorText = document.getElementById("errorText") ;
 var pesoEN = document.getElementById('pesoEN');
 var rfidEN = document.getElementById('rfidEN');
 var adminrole = "SMY@DM1N.01";
@@ -26,12 +29,19 @@ function onlogout(){
 function cancellogout(){
   bandera_logout = false;
   logoutmodal.classList.remove("is-active");
+  logoutform.classList.add("logout");
+  logoutform.style.visibility = "hidden"
+}
+
+function showlogout(){
+  logoutform.classList.remove("logout");
+  logoutform.style.visibility = "visible"
 }
 
 function gobacktoLogin(){
-  console.log("cambio de pantalla")
-  client.end()
-  client2.end() 
+  console.log("cambio de pantalla");
+  client2.end();
+  client.end();
 }
 
 function showmodal(message){
@@ -55,7 +65,6 @@ function stringPayload(message)
 }
 client.on('message',(topic,message)=>{ // cuando llega el mensaje del mqtt local
   message = JSON.parse(message.toString());
-  //console.log(message)
   elem.textContent = message['SCALE']['weight'] + " " + message['SCALE']['units']; //change data in html
   var role = message['RFID']['ROLE'];
   var bandera = message['SEND']
@@ -82,21 +91,44 @@ client.on('connect',()=>{
 })
 
 client2.on('connect',()=>{
-  console.log("conectado2",client2)
+  console.log("conectado senscloud")
 })
 
-client.on('end',()=>{ //se llama 
+client2.on('end',()=>{ //se llama 
   Buzzer.TurnBuzzer(1)
   setTimeout(function() {
     Buzzer.TurnBuzzer(0);
     bandera_logout = false;
     logoutmodal.classList.remove("is-active");
     window.location.href = "main.html"
-  }, 1000);
-  
+  }, 500);
 })
 
-
+async function writeBut(val){
+  errorText.style.visibility = "hidden"
+  if(val ==="del"){
+    console.log("del")
+    var newstr = pinInput.value.toString()
+    pinInput.value = newstr.substring(0, newstr.length -1);
+  }
+  else if(val ==="ok"){
+    //const result = await makePost.sendRequest(pinInput.value);
+    /* if(result.success){
+      changeScreen();
+    } */
+    if (pinInput.value === "0000"){
+      gobacktoLogin()
+    }
+    else{
+      pinInput.value = ""
+      errorText.style.visibility = "visible"
+    }
+  }
+  else{
+    pinInput.value = pinInput.value + val.toString();
+  }
+  
+}
 
 
 

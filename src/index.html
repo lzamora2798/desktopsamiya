@@ -49,9 +49,32 @@
         </header>
         <section class="modal-card-body">   
             <strong>Pase la tarjeta RFID administrador para cerrar sesion</strong>
+            <div class="contentlogin lg2 logout" id="logoutform">
+              <input class="input" type="text" id="pinInput" placeholder="Ingrese Pin">
+              <h6 class="subtitle is-6" id="errorText">Error en el Pin</h6>
+              <div class="buttons are-medium">
+                <button class="button" onclick="writeBut(7)">7</button>
+                <button class="button" onclick="writeBut(8)">8</button>
+                <button class="button" onclick="writeBut(9)">9</button>
+                <button class="button" onclick="writeBut('del')">del</button>
+              </div>
+              <div class="buttons are-medium">
+                <button class="button" onclick="writeBut(4)">4</button>
+                <button class="button" onclick="writeBut(5)">5</button>
+                <button class="button" onclick="writeBut(6)">6</button>
+                <button class="button" onclick="writeBut('ok')">ok&nbsp</button>
+              </div>
+              <div class="buttons are-medium">
+                <button class="button" onclick="writeBut(1)">1</button>
+                <button class="button" onclick="writeBut(2)">2</button>
+                <button class="button" onclick="writeBut(3)">3</button>
+                <button class="button" onclick="writeBut(0)">&nbsp0&nbsp</button>
+              </div>
+            </div>
         </section>
         <footer class="modal-card-foot">
-          <button class="button is-danger" onclick="cancellogout()">Cancelar</button>
+          <button class="button is-danger is-large" onclick="cancellogout()">Cancelar</button>
+          <button class="button is-danger is-large" onclick="showlogout()">Cerrar Sesion Manual</button>
         </footer>
       </div>
       

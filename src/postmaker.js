@@ -1,16 +1,16 @@
 'use strict';
 const https = require('https')
 
-const sendRequest = () => {
+const sendRequest = async (value) => {
 const data = JSON.stringify({
-    username: "administrador",
-    password: "Administrador1"
+    pin: value.toString()
 })
+ 
 
 const options = {
     hostname: 'backend.senscloud.io',
     port: 443,
-    path: '/api/users/signin/',
+    path: '/api/pins/getpin',
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
@@ -19,20 +19,30 @@ const options = {
         'access-control-allow-origin': '*',
     }
 }
+    let p = new Promise((resolve, reject) => {
+        const req = https.request(options, res => {
+            res.setEncoding('utf8');
+            let responseBody = '';
 
-    const req = https.request(options, res => {
-        console.log(`statusCode: ${res.statusCode}`)
-    
-        res.on('data', d => {
-            process.stdout.write(d)
+            res.on('data', (chunk) => {
+                responseBody += chunk;
+            });
+            res.on('end', () => {
+                resolve(JSON.parse(responseBody));
+            });
+
         })
-    }) 
-    req.on('error', error => {
-        console.error(error)
-    })
-    req.write(data)
-    req.end()
-    console.log("wokrin")
+        req.on('error', error => {
+            console.error(error)
+        })
+        req.write(data)
+        req.end()
+        
+    });
+
+return await p;
+    
+    
   };
 
 

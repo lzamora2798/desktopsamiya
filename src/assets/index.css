@@ -59,6 +59,13 @@ body {
   margin-bottom: 0px;
 }
 
+.logout{
+  height: 20px;
+}
+.lg2{
+  margin-left: 100px;
+}
+
 .contentlogin .input{
   width: 150px;
 }

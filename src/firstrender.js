@@ -14,7 +14,7 @@ function changeScreen() {
     window.location.href = "index.html"
 }
 
-function writeBut(val){
+async function writeBut(val){
   errorText.style.visibility = "hidden"
   if(val ==="del"){
     console.log("del")
@@ -22,7 +22,11 @@ function writeBut(val){
     pinInput.value = newstr.substring(0, newstr.length -1);
   }
   else if(val ==="ok"){
-    if(pinInput.value ==="1234"){
+    //const result = await makePost.sendRequest(pinInput.value);
+    /* if(result.success){
+      changeScreen();
+    } */
+    if (pinInput.value === "0000"){
       changeScreen();
     }
     else{
@@ -70,6 +74,6 @@ client.on('message',(topic,message)=>{
       Buzzer.TurnBuzzer(0);
       console.log("desconectado"),
       changeScreen();
-    }, 1000);
+    }, 500);
     
   })
