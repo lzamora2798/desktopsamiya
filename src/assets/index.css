@@ -1,7 +1,7 @@
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   margin: auto;
-  padding-top: 10%;
+  padding-top: 5%;
   height: 100vh;
   text-align: center;
   background-image: url('sens.png');
@@ -26,12 +26,28 @@ body {
   background-color:#10174c;
 }
 
+.title{
+  font-size: 60px;
+}
+.title2{
+  font-size: 70px;
+  color: #10174c;
+}
+.subtitle{
+  font-size: 45px;
+}
+.subtitle2{
+  font-size: 40px;
+  margin: 30px;
+}
+#col1 .is-secondary{
+  margin-top: 20px;
+}
 .contentlogin{
-  width: 20%;
+  width: 60%;
   padding-top: 10px;
   padding-left: 10px;
-  margin-left: 40%;
-  margin-right: 40%;
+  
   position: inherit;
   background-color:#10174c;
   text-align: center;
@@ -42,6 +58,17 @@ body {
 .contentlogin .buttons{
   margin-bottom: 0px;
 }
+
+.contentlogin .input{
+  width: 150px;
+}
+
+.contentlogin .subtitle{
+  color:red;
+  visibility: hidden;
+  margin-bottom: 0px;
+}
+
 
 
 

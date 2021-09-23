@@ -1,43 +1,46 @@
 var mqtt = require('mqtt')
-const { exec } = require("child_process");
 const https = require('https')
 const makePost = require('./postmaker.js');
-
+const Buzzer = require('./buzzer.js');
 var client  = mqtt.connect([{ host: 'localhost', port: 1883 }])
 var topic = "python/weight"
 var loginform = document.getElementById("loginform") ;
+var pinInput = document.getElementById("pinInput") ;
+var errorText = document.getElementById("errorText") ;
+var col1 = document.getElementById("col1") ;
 var admin_flag= false;
 function changeScreen() {
     console.log("cambio de pantalla")
     window.location.href = "index.html"
 }
 
-function TurnBuzzer(value){
-  exec(`echo ${value} > /dev/buzzer`, (error, stdout, stderr) => {
-    if (error) {
-        console.log(`error: ${error.message}`);
-        return;
+function writeBut(val){
+  errorText.style.visibility = "hidden"
+  if(val ==="del"){
+    console.log("del")
+    var newstr = pinInput.value.toString()
+    pinInput.value = newstr.substring(0, newstr.length -1);
+  }
+  else if(val ==="ok"){
+    if(pinInput.value ==="1234"){
+      changeScreen();
     }
-    if (stderr) {
-        console.log(`stderr: ${stderr}`);
-        return;
+    else{
+      pinInput.value = ""
+      errorText.style.visibility = "visible"
     }
-    console.log(`stdout: ${stdout}`);
-});
+  }
+  else{
+    pinInput.value = pinInput.value + val.toString();
+  }
   
 }
 
-function activeNoise(){
-  TurnBuzzer(1)
-  setTimeout(function() {
-    TurnBuzzer(0)
-  }, 1000);
 
-}
 
 function onlogin(){
-  
     loginform.style.visibility = "visible";
+    col1.classList.remove("is-full");
 }
 
 client.on('message',(topic,message)=>{ 
@@ -62,7 +65,11 @@ client.on('message',(topic,message)=>{
   })
   
   client.on('end',()=>{ //se llama 
-    activeNoise();
-    console.log("desconectado")
-    changeScreen()
+    Buzzer.TurnBuzzer(1)
+    setTimeout(function() {
+      Buzzer.TurnBuzzer(0);
+      console.log("desconectado"),
+      changeScreen();
+    }, 1000);
+    
   })

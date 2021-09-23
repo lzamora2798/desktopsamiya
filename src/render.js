@@ -1,5 +1,6 @@
 var mqtt = require('mqtt')
 const saveData = require('./filewriter.js');
+const Buzzer = require('./buzzer.js');
 var client  = mqtt.connect([{ host: 'localhost', port: 1883 }])
 var host = 'broker.senscloud.io'
 var port = 1883
@@ -29,11 +30,8 @@ function cancellogout(){
 
 function gobacktoLogin(){
   console.log("cambio de pantalla")
-  bandera_logout = false;
-  logoutmodal.classList.remove("is-active");
   client.end()
-  client2.end()
-  window.location.href = "main.html"
+  client2.end() 
 }
 
 function showmodal(message){
@@ -85,6 +83,17 @@ client.on('connect',()=>{
 
 client2.on('connect',()=>{
   console.log("conectado2",client2)
+})
+
+client.on('end',()=>{ //se llama 
+  Buzzer.TurnBuzzer(1)
+  setTimeout(function() {
+    Buzzer.TurnBuzzer(0);
+    bandera_logout = false;
+    logoutmodal.classList.remove("is-active");
+    window.location.href = "main.html"
+  }, 1000);
+  
 })
 
 

@@ -5,34 +5,49 @@
     <title>Desktop</title>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"
+      href="assets/bulma.css"
     />
     <link rel="stylesheet" href="assets/index.css">
   </head>
   <body>
     <h1 class="title">Bienvenido</h1>
     <h1 class="subtitle">Ingrese su tarjeta RFID</h1>
-    <div class="contentlogin" id="loginform">
-      <div class="buttons are-small">
-        <button class="button">7</button>
-        <button class="button">8</button>
-        <button class="button">9</button>
+    <div class="columns">
+      <div class="column is-full" id="col1">
+        <div >
+          <button class="button is-primary is-large" id="startBtn" onclick="changeScreen()">Iniciar sesion</button> 
+        </div>
+        <div>
+          <button class="button is-secondary is-large" onclick="onlogin()">Inicio Manual</button>
+        </div>
       </div>
-      <div class="buttons are-small">
-        <button class="button">4</button>
-        <button class="button">5</button>
-        <button class="button">6</button>
-      </div>
-      <div class="buttons are-small">
-        <button class="button">1</button>
-        <button class="button">2</button>
-        <button class="button">3</button>
+      <div class="column">
+        <div class="contentlogin" id="loginform">
+          <input class="input" type="text" id="pinInput" placeholder="Ingrese Pin">
+          <h6 class="subtitle is-6" id="errorText">Error en el Pin</h6>
+          <div class="buttons are-medium">
+            <button class="button" onclick="writeBut(7)">7</button>
+            <button class="button" onclick="writeBut(8)">8</button>
+            <button class="button" onclick="writeBut(9)">9</button>
+            <button class="button" onclick="writeBut('del')">del</button>
+          </div>
+          <div class="buttons are-medium">
+            <button class="button" onclick="writeBut(4)">4</button>
+            <button class="button" onclick="writeBut(5)">5</button>
+            <button class="button" onclick="writeBut(6)">6</button>
+            <button class="button" onclick="writeBut('ok')">ok&nbsp</button>
+          </div>
+          <div class="buttons are-medium">
+            <button class="button" onclick="writeBut(1)">1</button>
+            <button class="button" onclick="writeBut(2)">2</button>
+            <button class="button" onclick="writeBut(3)">3</button>
+            <button class="button" onclick="writeBut(0)">&nbsp0&nbsp</button>
+          </div>
+        </div>
       </div>
     </div>
-    <div>
-      <button class="button is-primary" id="startBtn" onclick="changeScreen()">Iniciar sesion</button>
-      <button class="button is-secondary" onclick="onlogin()">Inicio Manual</button>
-    </div>
+    
+    
     
     <script src="firstrender.js"></script>
 </html>
