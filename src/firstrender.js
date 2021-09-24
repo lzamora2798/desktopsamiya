@@ -23,7 +23,7 @@ async function writeBut(val){
   }
   else if(val ==="ok"){
     const result = await makePost.sendRequest(pinInput.value);
-     if(result.success){
+     if(result.success == true){
       changeScreen();
     } 
     else if (pinInput.value === "0000"){
@@ -74,6 +74,6 @@ client.on('message',(topic,message)=>{
       Buzzer.TurnBuzzer(0);
       console.log("desconectado"),
       changeScreen();
-    }, 500);
+    }, 300);
     
   })

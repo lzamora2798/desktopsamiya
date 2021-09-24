@@ -33,10 +33,11 @@ const options = {
 
         })
         req.on('error', error => {
-            console.error(error)
+            resolve({success:"error"});
         })
         req.write(data)
         req.end()
+        
         
     });
 

@@ -102,7 +102,7 @@ client2.on('end',()=>{ //se llama
     bandera_logout = false;
     logoutmodal.classList.remove("is-active");
     window.location.href = "main.html"
-  }, 500);
+  }, 300);
 })
 
 async function writeBut(val){
@@ -114,7 +114,7 @@ async function writeBut(val){
   }
   else if(val ==="ok"){
     const result = await makePost.sendRequest(pinInput.value);
-    if(result.success){
+    if(result.success == true){
       gobacktoLogin()
     } 
     else if (pinInput.value === "0000"){
