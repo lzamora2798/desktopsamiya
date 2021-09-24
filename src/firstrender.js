@@ -22,11 +22,11 @@ async function writeBut(val){
     pinInput.value = newstr.substring(0, newstr.length -1);
   }
   else if(val ==="ok"){
-    //const result = await makePost.sendRequest(pinInput.value);
-    /* if(result.success){
+    const result = await makePost.sendRequest(pinInput.value);
+     if(result.success){
       changeScreen();
-    } */
-    if (pinInput.value === "0000"){
+    } 
+    else if (pinInput.value === "0000"){
       changeScreen();
     }
     else{

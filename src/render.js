@@ -1,6 +1,7 @@
 var mqtt = require('mqtt')
 const saveData = require('./filewriter.js');
 const Buzzer = require('./buzzer.js');
+const makePost = require('./postmaker.js');
 var client  = mqtt.connect([{ host: 'localhost', port: 1883 }])
 var host = 'broker.senscloud.io'
 var port = 1883
@@ -112,11 +113,11 @@ async function writeBut(val){
     pinInput.value = newstr.substring(0, newstr.length -1);
   }
   else if(val ==="ok"){
-    //const result = await makePost.sendRequest(pinInput.value);
-    /* if(result.success){
-      changeScreen();
-    } */
-    if (pinInput.value === "0000"){
+    const result = await makePost.sendRequest(pinInput.value);
+    if(result.success){
+      gobacktoLogin()
+    } 
+    else if (pinInput.value === "0000"){
       gobacktoLogin()
     }
     else{
