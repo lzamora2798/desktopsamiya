@@ -7,42 +7,25 @@ const data = JSON.stringify({
 })
  
 
-const options = {
-    hostname: 'backend.senscloud.io',
-    port: 443,
-    path: '/api/pins/getpin',
-    method: 'POST',
-    headers: {
+const headers = {
         'Content-Type': 'application/json',
         'access-control-allow-methods': 'GET, POST, PUT, DELETE',
         'access-control-allow-headers': '*',
-        'access-control-allow-origin': '*',
-    }
+        'access-control-allow-origin': '*',   
 }
     let p = new Promise((resolve, reject) => {
-        const req = https.request(options, res => {
-            res.setEncoding('utf8');
-            let responseBody = '';
-
-            res.on('data', (chunk) => {
-                responseBody += chunk;
-            });
-            res.on('end', () => {
-                resolve(JSON.parse(responseBody));
-            });
-
-        })
-        req.on('error', error => {
-            resolve({success:"error"});
-        })
-        req.write(data)
-        req.end()
-        
-        
+        fetch('https://backend.senscloud.io/api/pins/getpin', {
+            method: 'POST',
+            body: data,
+            headers: headers
+        }).then(res => res.json())
+        .then(json => {
+            console.log(json)
+            resolve(json)
+        }).catch(error=> resolve({success: false}));
     });
 
-return await p;
-    
+    return await p;
     
   };
 

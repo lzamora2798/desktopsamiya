@@ -12,7 +12,6 @@ fs.access(backup_dir, fs.F_OK, (err) => {
       return;
     }
   }
-  console.log("no existe")
   const jsonData = JSON.stringify(newData, null, 2)
   fs.writeFile(backup_dir, jsonData, finished)
   }

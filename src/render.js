@@ -40,7 +40,6 @@ function showlogout(){
 }
 
 function gobacktoLogin(){
-  console.log("cambio de pantalla");
   client2.end();
   client.end();
 }
@@ -69,8 +68,8 @@ client.on('message',(topic,message)=>{ // cuando llega el mensaje del mqtt local
   elem.textContent = message['SCALE']['weight'] + " " + message['SCALE']['units']; //change data in html
   var role = message['RFID']['ROLE'];
   var bandera = message['SEND']
-  console.log(bandera)
   if(bandera_logout){ // si el modal logut esta activado 
+    role = message['RFID']['ROLE'];
     if (role == adminrole){ // 
       gobacktoLogin();
     }
@@ -89,6 +88,7 @@ client.on('message',(topic,message)=>{ // cuando llega el mensaje del mqtt local
 client.on('connect',()=>{
   client.subscribe(topic)
   console.log("conectado")
+  bandera_logout = false;
 })
 
 client2.on('connect',()=>{
