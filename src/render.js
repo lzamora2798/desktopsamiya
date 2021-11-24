@@ -70,7 +70,7 @@ client.on('message',(topic,message)=>{ // cuando llega el mensaje del mqtt local
   var bandera = message['SEND']
   if(bandera_logout){ // si el modal logut esta activado 
     role = message['RFID']['ROLE'];
-    if (role == adminrole){ // 
+    if (role.localeCompare(adminrole)==0){ // 
       gobacktoLogin();
     }
   }

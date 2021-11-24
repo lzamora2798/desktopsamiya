@@ -33,21 +33,19 @@ def publish(client):
 
         msg = f"{msg_count} kg"
         if c%13==0 :
-            jsondata = {'RFID': {'ID': 'UIDD0A9455F', 'ROLE': ''}, 'SEND': True,'SCALE': {'successful': True, 'stable': True, 'tare': 'GROSS', 'weight': '1.036', 'units': 'kg'}}
-        elif c%7==0 : 
             jsondata = {'RFID': {'ID': 'UID525ED1B2', 'ROLE': 'SMY@DM1N.01'}, 'SEND': True,'SCALE': {'successful': True, 'stable': True, 'tare': 'GROSS', 'weight': '1.036', 'units': 'kg'}}
-        else:
-            jsondata = {'RFID': 'No Card','SEND': False, 'SCALE': {'successful': True, 'stable': True, 'tare': 'GROSS', 'weight': '1.036', 'units': 'kg'}}
-        jsondata = json.dumps(jsondata)
-        print(jsondata)   
-        result = client.publish(topic, jsondata)
-        status = result[0]
-        if status == 0:
-            print(f"Send `{msg}` to topic `{topic}`")
-            c+=1
-        else:
-            print(f"Failed to send message to topic {topic}")
-
+        
+            jsondata = {'RFID': {'ID': 'UID525ED1B2', 'ROLE': 'SMY@DM1N.01'}, 'SEND': True,'SCALE': {'successful': True, 'stable': True, 'tare': 'GROSS', 'weight': '1.036', 'units': 'kg'}}
+            jsondata = json.dumps(jsondata)
+            print(jsondata)   
+            result = client.publish(topic, jsondata)
+            status = result[0]
+            if status == 0:
+                print(f"Send `{msg}` to topic `{topic}`")
+                
+            else:
+                print(f"Failed to send message to topic {topic}")
+        c+=1
 
 
 def run():
