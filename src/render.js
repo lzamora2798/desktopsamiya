@@ -2,6 +2,7 @@ var mqtt = require('mqtt')
 const saveData = require('./filewriter.js');
 const Buzzer = require('./buzzer.js');
 const makePost = require('./postmaker.js');
+const makeBatch = require('./postBatch.js');
 var client  = mqtt.connect([{ host: 'localhost', port: 1883 }])
 var host = 'broker.senscloud.io'
 var port = 1883
@@ -19,9 +20,14 @@ var pinInput = document.getElementById("pinInput") ;
 var errorText = document.getElementById("errorText") ;
 var pesoEN = document.getElementById('pesoEN');
 var rfidEN = document.getElementById('rfidEN');
+var selectBatch = document.getElementById('selectbatch');
+var divBatch = document.getElementById('divSelect');
+var batchModal= document.getElementById('batchModal');
 var adminrole = "SMY@DM1N.01";
-
+let array_Batch = []
 var bandera_logout = false;
+let batch_value = {}
+
 function onlogout(){
   bandera_logout = true;
   logoutmodal.classList.add("is-active");
@@ -54,12 +60,33 @@ function showmodal(message){
 
 }
 
+function addOptions(){
+  const longitud = array_Batch.length
+  for (var i = 0; i<longitud; i++){
+    var opt = document.createElement('option');
+    opt.value = array_Batch[i]._id ? array_Batch[i]._id :"" ;
+    opt.innerHTML = array_Batch[i].label ? array_Batch[i].label :"" ;
+    selectBatch.appendChild(opt);
+  }
+  divBatch.classList.remove("is-loading");
+}
+
+function killBatchModal(){
+  batch_value = selectBatch.value;
+  if (batch_value){
+    batchModal.classList.remove("is-active");
+    console.log(batch_value)
+  }
+ 
+}
+
 function stringPayload(message)
 { 
   var peso = { 
     weight:parseFloat(message['SCALE']['weight']),
     units:message['SCALE']['units'],
-    id:message['RFID']['ID']
+    id:message['RFID']['ID'],
+    batch:batch_value
   }
   return JSON.stringify(peso);
 }
@@ -91,8 +118,12 @@ client.on('connect',()=>{
   bandera_logout = false;
 })
 
-client2.on('connect',()=>{
+client2.on('connect',async ()=>{
   console.log("conectado senscloud")
+  const data = await makeBatch.sendRequest()
+  array_Batch = data.message ? data.message : []
+  console.log(array_Batch)
+  addOptions()
 })
 
 client2.on('end',()=>{ //se llama 
