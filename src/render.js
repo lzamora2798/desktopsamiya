@@ -23,10 +23,12 @@ var rfidEN = document.getElementById('rfidEN');
 var selectBatch = document.getElementById('selectbatch');
 var divBatch = document.getElementById('divSelect');
 var batchModal= document.getElementById('batchModal');
+var lote_span= document.getElementById('online');
 var adminrole = "SMY@DM1N.01";
 let array_Batch = []
 var bandera_logout = false;
 let batch_value = {}
+let dic_batch={}
 var admin_flag= false;
 function onlogout(){
   bandera_logout = true;
@@ -64,8 +66,11 @@ function addOptions(){
   const longitud = array_Batch.length
   for (var i = 0; i<longitud; i++){
     var opt = document.createElement('option');
-    opt.value = array_Batch[i]._id ? array_Batch[i]._id :"" ;
-    opt.innerHTML = array_Batch[i].label ? array_Batch[i].label :"" ;
+    const key_b = array_Batch[i]._id ? array_Batch[i]._id :"" ;
+    const value_b = array_Batch[i].label ? array_Batch[i].label :"" ;
+    opt.value = key_b;
+    opt.innerHTML = value_b;
+    dic_batch[key_b]=value_b
     selectBatch.appendChild(opt);
   }
   divBatch.classList.remove("is-loading");
@@ -75,7 +80,7 @@ function killBatchModal(){
   batch_value = selectBatch.value;
   if (batch_value){
     batchModal.classList.remove("is-active");
-    console.log(batch_value)
+    lote_span.innerHTML = "Lote: "+ dic_batch[batch_value];
   }
  
 }

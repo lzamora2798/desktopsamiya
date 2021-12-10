@@ -13,7 +13,9 @@ body {
 
 #online{
   text-align: left;
-  color: red;
+  padding-left: 10px;
+  font-size: 25px;
+  color: rgb(36, 36, 77);
 }
 #logout{
 

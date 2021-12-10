@@ -64,8 +64,6 @@ client.on('message',(topic,message)=>{
     admin_flag = false;
     client.subscribe(topic)
     console.log("conectado")
-    //makePost.sendRequest();
-
   })
   
   client.on('end',()=>{ //se llama 
