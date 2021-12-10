@@ -27,7 +27,7 @@ var adminrole = "SMY@DM1N.01";
 let array_Batch = []
 var bandera_logout = false;
 let batch_value = {}
-
+var admin_flag= false;
 function onlogout(){
   bandera_logout = true;
   logoutmodal.classList.add("is-active");
@@ -95,12 +95,15 @@ client.on('message',(topic,message)=>{ // cuando llega el mensaje del mqtt local
   elem.textContent = message['SCALE']['weight'] + " " + message['SCALE']['units']; //change data in html
   var role = message['RFID']['ROLE'];
   var bandera = message['SEND']
-  if(bandera_logout){ // si el modal logut esta activado 
-    role = message['RFID']['ROLE'];
-    if (role == adminrole){ // 
+  let card = message['RFID']
+  if(card=="No Card"){ // solo hay role en admin
+    admin_flag = true   
+  }
+  
+    if(bandera_logout && admin_flag && role==adminrole){  
       gobacktoLogin();
     }
-  }
+  
   else{   
     if (bandera && message['RFID']['ID'] && role != adminrole){ // garantiza que si exista el id 
       var payload = stringPayload(message);
